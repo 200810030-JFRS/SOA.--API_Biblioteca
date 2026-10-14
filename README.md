@@ -78,11 +78,9 @@ PUT	/prestamos/{id}/devolver	Registrar devolución
 
 # Complementos: 
 
-## 1. Breve Descripción de cada API
-
-* **API de Libros (`/libros`):** Permite administrar el catálogo de la biblioteca. Mantiene el control del título, autor, año de publicación y disponibilidad de ejemplares en inventario.
-* **API de Usuarios (`/usuarios`):** Gestiona la información general del usuario (nombre, correo, teléfono, dirección, rol y estado), requerida para la vinculación con el sistema de préstamos.
-* **API de Préstamos (`/prestamos`):** Controla el ciclo de vida del préstamo de libros. Decrementa automáticamente los ejemplares al prestarlos, registra la fecha de inicio, valida que no haya devoluciones duplicadas y reincorpora los ejemplares al catálogo al momento de la devolución.
+libros: Permite administrar el catálogo de la biblioteca. Mantiene el control del título, autor, año de publicación y disponibilidad de ejemplares en inventario.
+Usuarios: Gestiona la información general del usuario (nombre, correo, teléfono, dirección, rol y estado), requerida para la vinculación con el sistema de préstamos.
+Prestámos: Controla el ciclo de vida del préstamo de libros. Decrementa automáticamente los ejemplares al prestarlos, registra la fecha de inicio, valida que no haya devoluciones duplicadas y reincorpora los ejemplares al catálogo al momento de la devolución.
 
 ## 2. Instrucciones para Ejecutar Localmente
 
