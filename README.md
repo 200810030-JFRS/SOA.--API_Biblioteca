@@ -21,7 +21,8 @@ API REST desarrollada bajo los principios de Arquitectura Orientada a Servicios 
 4. Desde la raíz del proyecto ejecutar .\mvnw.cmd spring-boot:run (Windows).
 5. Verificar que aparezca “Started LibreriaApplication” y consultar http://localhost:1600/libros.
    
-Parámetros necesarios: spring.datasource.url, spring.datasource.username, spring.datasource.password y server.port=1600. Para evitar publicar secretos, use variables de entorno o una configuración local excluida de Git.
+Parámetros necesarios: spring.datasource.url, spring.datasource.username, spring.datasource.password y server.port=1600. 
+Para evitar publicar secretos, use variables de entorno o una configuración local excluida de Git.
 spring.datasource.url=${DB_URL}
 spring.datasource.username=${DB_USER}
 spring.datasource.password=${DB_PASSWORD}
