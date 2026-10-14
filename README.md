@@ -15,20 +15,22 @@ API REST desarrollada bajo los principios de Arquitectura Orientada a Servicios 
 
 ## Pasos de Instalación y Ejecución Local
 
-Requisitos previos:Tener instalado Java 21 JDK.Servidor MySQL 8 activo en el puerto 3306.Crear la Base de Datos:
-Abre MySQL Workbench o la terminal de MySQL y ejecuta:CREATE DATABASE IF NOT EXISTS libreria;
-Configurar variables de entorno o archivo de propiedades:
-Modifica o genera el archivo src/main/resources/application.properties asegurándote de no exponer datos sensibles.Ejecutar la aplicación:
-En Windows (PowerShell):.\mvnw.cmd spring-boot:run
-En Linux/macOS:./mvnw spring-boot:run
-Verificación:
-Confirma que en la consola aparezca Started LibreriaApplication y prueba la ruta base http://localhost:1600/libros. Variables de Entorno NecesariasPara proteger credenciales sensibles en entornos públicos, utiliza variables de entorno en lugar de contraseñas explícitas en el código:DB_URL: jdbc:mysql://localhost:3306/libreria?serverTimezone=UTCDB_USER: Nombre del usuario de MySQL (ej. root)DB_PASSWORD: Contraseña del usuario de MySQLEjemplo de application.properties:spring.datasource.url=${DB_URL}
+1. Instalar Java 21 y MySQL 8; disponer de acceso local al puerto 3306.
+2. Crear en MySQL una base de datos llamada libreria, si todavía no existe.
+3. Configurar src/main/resources/application.properties con credenciales locales propias, sin publicarlas.
+4. Desde la raíz del proyecto ejecutar .\mvnw.cmd spring-boot:run (Windows).
+5. Verificar que aparezca “Started LibreriaApplication” y consultar http://localhost:1600/libros.
+   
+Parámetros necesarios: spring.datasource.url, spring.datasource.username, spring.datasource.password y server.port=1600. Para evitar publicar secretos, use variables de entorno o una configuración local excluida de Git.
+spring.datasource.url=${DB_URL}
 spring.datasource.username=${DB_USER}
 spring.datasource.password=${DB_PASSWORD}
 server.port=1600
 spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-Listado de Endpoints Libros (/libros)MétodoRutaDescripciónGET/librosListar todos los librosGET/libros/{isbn}Consultar libro por ID (ISBN)POST/librosCrear un libroPUT/libros/{isbn}Actualizar datos de un libroDELETE/libros/{isbn}Eliminar un libroGET/libros/autor/{autor}Buscar libros por autor exactoGET/libros/titulo/{titulo}Buscar libros por título exacto Usuarios (/usuarios)MétodoRutaDescripciónGET/usuariosListar todos los usuariosGET/usuarios/{id}Consultar usuario por IDPOST/usuariosCrear un usuarioPUT/usuarios/{id}Actualizar datos de un usuarioDELETE/usuarios/{id}Eliminar un usuario Préstamos (/prestamos)MétodoRutaDescripciónGET/prestamosListar todos los préstamosGET/prestamos/{id}Consultar préstamo por IDGET/prestamos/usuario/{usuarioId}Historial de préstamos por usuarioGET/prestamos/libro/{isbn}Historial de préstamos por libroPOST/prestamos?usuarioId=1&isbn=1Registrar un nuevo préstamoPUT/prestamos/{id}/devolverRegistrar devolución de préstamo Ejemplos de Peticiones y Respuestas1. Registrar un LibroMétodo / URL: POST http://localhost:1600/librosBody (raw / JSON):{
+Ejemplo de DB_URL para un entorno local de pruebas: jdbc:mysql://localhost:3306/libreria?serverTimezone=UTC. Las opciones de autenticación y TLS deberán ajustarse a la instalación.
+
+
+Registrar un LibroMétodo / URL: POST http://localhost:1600/librosBody (raw / JSON):{
   "titulo": "El Principito",
   "autor": "Antoine de Saint-Exupery",
   "añoPublicacion": "1943",
@@ -51,7 +53,29 @@ Respuesta: HTTP 200 OK{
 3. Registrar una DevoluciónMétodo / URL: PUT http://localhost:1600/prestamos/1/devolverBody: Ninguno (none)Respuesta (Primera vez): HTTP 200 OK
 (Actualiza fechaDevolucion a la fecha actual y suma 1 al número de ejemplares)Respuesta (Intento duplicado): HTTP 400 Bad RequestEste libro ya fue devuelto
 
-# PARTE 2: Documento Técnico de Entrega (Reporte)
+# Endpoints disponibles
+Método	Ruta	Descripción
+GET	/libros	Listar libros
+GET	/libros/{isbn}	Consultar libro por ID
+POST	/libros	Crear libro
+PUT	/libros/{isbn}	Actualizar libro
+DELETE	/libros/{isbn}	Eliminar libro
+GET	/libros/autor/{autor}	Buscar por autor exacto
+GET	/libros/titulo/{titulo}	Buscar por título exacto
+GET	/usuarios	Listar usuarios
+GET	/usuarios/{id}	Consultar usuario
+POST	/usuarios	Crear usuario
+PUT	/usuarios/{id}	Actualizar usuario
+DELETE	/usuarios/{id}	Eliminar usuario
+GET	/prestamos	Listar préstamos
+GET	/prestamos/{id}	Consultar préstamo
+GET	/prestamos/usuario/{usuarioId}	Historial de un usuario
+GET	/prestamos/libro/{isbn}	Historial de un libro
+POST	/prestamos?usuarioId=1&isbn=1	Registrar préstamo
+PUT	/prestamos/{id}/devolver	Registrar devolución
+
+
+# Complementos: 
 
 ## 1. Breve Descripción de cada API
 
